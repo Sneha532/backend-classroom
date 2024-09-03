@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shri Shikshayatan School</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Add FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %}" alt="School Logo">
+            </div>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#academics">Academics</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Placeholder for Picture -->
+        <section id="picture">
+            <img src="{% static 'images/Smart_Classroom.jpg' %}" alt="School Picture">
+        </section>
+
+        <!-- Notice Board -->
+        <section id="notice-board">
+            <div class="scrolling-text-container">
+                <span>New Notice</span>
+                <marquee behavior="scroll" direction="left">Important notice text goes here...</marquee>
+            </div>
+        </section>
+    </main>
+    <div id="resources"></div>
+    <footer>
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>SCHOOL ADMIN OFFICE:</h3>
+                    <p><i class="fas fa-phone"></i> Phone: +91 33 22821450, +91 33 22826350</p>
+                    <p><i class="fas fa-fax"></i> Fax: +91 33 22826350</p>
+                    <p><i class="fas fa-envelope"></i> Email: <a
+                            href="mailto:info@shrishikshayatanschool.com">info@shrishikshayatanschool.com</a></p>
+                </div>
+                <div class="contact-info">
+                    <h3>VISITORS:</h3>
+                    <p><i class="fas fa-phone"></i> Phone: +91 33 22827752, +91 33 22821776</p>
+                    <p><i class="fas fa-envelope"></i> Email: <a
+                            href="mailto:principal@shrishikshayatanschool.com">principal@shrishikshayatanschool.com</a>
+                    </p>
+                    <h3>JUNIOR DEPT:</h3>
+                    <p><i class="fas fa-phone"></i> Phone: +91 33 22820346</p>
+                    <p><i class="fas fa-envelope"></i> Email: <a
+                            href="mailto:hm@shrishikshayatanschool.com">hm@shrishikshayatanschool.com</a></p>
+                    <h3>PRE-PRIMARY SECTION:</h3>
+                    <p><i class="fas fa-phone"></i> Phone: +91 8100975564, +91 8100975565</p>
+                    <p><i class="fas fa-envelope"></i> Email: <a
+                            href="mailto:hm@shrishikshayatanschool.com">hm@shrishikshayatanschool.com</a></p>
+                </div>
+            </div>
+        </section>
+
+        <p>&copy; 2024 Shri Shikshayatan School. All rights reserved.</p>
+    </footer>
+
+    <script>
+        fetch('/resources')
+            .then(response => response.json())
+            .then(data => {
+                const resourceDiv = document.getElementById('resources');
+                let html = '<table><thead><tr><th>ID</th><th>Name</th><th>Type</th></tr></thead><tbody>';
+                data.forEach(resource => {
+                    html += `<tr><td>${resource.id}</td><td>${resource.name}</td><td>${resource.type}</td></tr>`;
+                });
+                html += '</tbody></table>';
+                resourceDiv.innerHTML = html;
+            });
+    </script>
+</body>
+
+</html>
