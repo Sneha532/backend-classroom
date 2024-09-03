@@ -51,6 +51,7 @@ python manage.py runserver
 Open your web browser and go to http://127.0.0.1:8000/ to access the application.
 
 ## Project Structure
+```sh
 classroom-management/
 ├── classroom/
 │   ├── __init__.py
@@ -77,3 +78,4 @@ classroom-management/
 │   └── index.html
 ├── manage.py
 └── requirements.txt
+```
