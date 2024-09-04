@@ -1,0 +1,143 @@
+
+   {% extends "teacher/base.html" %}
+  
+   {% load static %}
+
+         
+{% block content %}
+       <div class="col-sm-8 col-sm-offset-3 col-lg-offset-2 main"> 
+  <div class="col-md-8 ">
+
+ <div class="card mb-4" style="width:150%;margin-left:20%">
+ 
+  <div class="panel-heading">  <br><h4 style="margin-left:5%">Your profile</h4></div><br><br>
+   <div class="panel-body">
+       
+    <div class="box box-info" >
+        
+            <div class="box-body">
+                     <div class="col-sm-6">
+                     
+                     <div style="margin-left:8%;margin-top:-5%;" > <img  src="{{ user.picture.url}}" name="imge" id="profile-image1" class="img-responsive" width="40%" height="40%" /> 
+             
+               </div>
+          <br> 
+            </div>
+            <div class="col-sm-6">
+            <span><h4 style="color:#00b1b1;"></h4></span>
+           
+            </div>
+            <div class="clearfix"></div>
+            <hr style="margin:5px 0 5px 0;">
+			<br>
+            <div class="col-sm-5 col-xs-6 tital " ><b>First name :  </b>{{ user.prenom}}</div>
+     <div class="clearfix"></div>
+<div class="bot-border"></div>
+    <br>        
+<div class="col-sm-5 col-xs-6 tital " ><b>Last name : </b>{{ user.nom}}</div>
+     <div class="clearfix"></div>
+<div class="bot-border"></div>
+<br>
+<div class="col-sm-5 col-xs-6 tital " ><b>Email : </b>{{ user.email}}</div>
+  <div class="clearfix"></div>
+<div class="bot-border"></div>
+<br>
+<div class="col-sm-7" id="info" style="margin-left:78%"> <a class="btn btn-warning" href="{% url 'displayData' %}?userE={{user.email}}" >Update data</a></div>
+  <div class="clearfix"></div>
+<div class="bot-border"></div>
+    <br>
+        </div>  
+    </div> 
+    </div>
+	</div>
+</div>  
+</div>
+
+{% endblock %}
+{% block sidebar %}
+<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'statistics' %}?uId={{user.id}}">
+    <div class="sidebar-brand-icon">
+      Online Class
+    </div>
+    <div class="sidebar-brand-text mx-3"></div>
+  </a>
+  <hr class="sidebar-divider my-0">
+ <br>
+  <div class="sidebar-heading">
+    Actions
+  </div>
+ <li class="nav-item">
+    <a class="nav-link " href="{% url 'statistics' %}?uId={{user.id}}">
+      <i class="fas fa-fw fa-home"></i>
+      <span>Home</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'addCourseSubject' %}?uId={{user.id}}">
+      <i class="fas fa-book-open"></i>
+      <span>Add course</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadC' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload course</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadTD' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload TD</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadTP' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload TP</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadCorre' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload correction</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadHW' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Send homeWork</span>
+    </a>
+  </li>
+ 
+ 
+  <hr class="sidebar-divider">
+  <div class="sidebar-heading">
+    Views
+  </div>
+  <li class="nav-item">
+   <a class="nav-link" href="{% url 'allCourses' %}?idUs={{user.id}}">
+      <i class="fas fa-fw fa-book"></i>
+      <span>Yous courses</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+      aria-expanded="true" aria-controls="collapseBootstrap">
+      <i class="fas fa-fw fa-users"></i>
+      <span>Your students</span>
+    </a>
+    <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        {% for c in classeS %}
+        <a class="collapse-item" href="{% url 'displayAllStudents' %}?uId={{user.id}}&idC={{c.id}}">{{c.titleClass}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </li>
+  
+</ul>
+
+{% endblock %}
+          
+          

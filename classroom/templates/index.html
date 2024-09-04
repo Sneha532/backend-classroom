@@ -1,93 +1,187 @@
-{% load static %}
-
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shri Shikshayatan School</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <!-- Add FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Home Page</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'homepage/css/styles.css' %}">
+
 </head>
-
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <img src="{% static 'images/logo.jpg' %}" alt="School Logo">
+
+<!-- header section starts  -->
+
+<header>
+
+    <a href="#home" class="logo"><span>Home</span>Page</a>
+
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#features">features</a>
+        <a href="#about">about</a>
+        <a class="btn" style="color: #fff;" onclick="openForm()">Log In</a>
+    </nav>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- home section starts  -->
+
+<section class="home" id="home">
+
+    <div class="content">
+        <h3>online class <span>management</span></h3>
+        <p>Get more time to teach and inspire learners with Classroom.</p>
+        <a href="#" class="btn" onclick="openForm()">Login</a>
+    </div>
+
+    <div class="image">
+        <img src="{% static 'homepage/images/home-img.png' %}" alt="">
+    </div>
+
+</section>
+
+<!-- home section ends -->
+
+<!-- features section starts  -->
+
+<section class="features" id="features">
+
+    <h1 class="heading"> features </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <img src="{% static 'homepage/images/manage.svg' %}" alt="">
+            <h3>MANAGE</h3>
+            <p>Simplify teaching and learning</p>
+            <a class="btn">read more</a>
+        </div>
+
+        <div class="box">
+            <img src="{% static 'homepage/images/measure.svg' %}" alt="">
+            <h3>MEASURE</h3>
+            <p>Move students forward</p>
+            <a class="btn">read more</a>
+        </div>
+
+        <div class="box">
+            <img src="{% static 'homepage/images/collaborate.svg' %}" alt="">
+            <h3>COLLABORATE</h3>
+            <p>Strengthen student connections</p>
+            <a class="btn">read more</a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- features section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+    <h1 class="heading"> about </h1>
+
+    <div class="column">
+
+        <div class="image">
+            <img src="{% static 'homepage/images/about.svg' %}" alt="">
+        </div>
+
+        <div class="content">
+            <h3>Easy And Perfect Solution For Your Online Class Management</h3>
+            <p>Get it as part of Workspace for Education</p>
+            <p>If you’re using it in school, we recommend signing up for Education Workspace. It is already included in Workspace for Education and works seamlessly with Workspace collaboration tools.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- about section ends -->
+
+<!-- footer section starts  -->
+
+<div class="footer">
+
+    <div class="box-container">
+
+        <div class="box">
+            <h3>about us</h3>
+            <p>A free and easy tool helping educators efficiently manage and assess progress, while enhancing connections with learners from school, from home, or on the go.</p>
+        </div>
+
+        <div class="box">
+            <h3>quick links</h3>
+            <a href="#home">home</a>
+            <a href="#features">features</a>
+            <a href="#about">about</a>
+        </div>
+
+        <div class="box">
+            <h3>follow us</h3>
+            <a href="">Linkedin</a>
+            <a href="">Github</a>
+        </div>
+
+        <div class="box">
+            <h3>contact info</h3>
+            <div class="info">
+                <i class="fas fa-phone"></i>
+                <p> +212 601-409071 <br> +212 613-357700 </p>
             </div>
-            <ul>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#academics">Academics</a></li>
-                <li><a href="#facilities">Facilities</a></li>
-                <li><a href="#login">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Placeholder for Picture -->
-        <section id="picture">
-            <img src="{% static 'images/Smart_Classroom.jpg' %}" alt="School Picture">
-        </section>
-
-        <!-- Notice Board -->
-        <section id="notice-board">
-            <div class="scrolling-text-container">
-                <span>New Notice</span>
-                <marquee behavior="scroll" direction="left">Important notice text goes here...</marquee>
+            <div class="info">
+                <i class="fas fa-envelope"></i>
+                <p> hajar.aitabdielmomin@uit.ac.ma <br> houssam.mrabet@uit.ac.ma </p>
             </div>
-        </section>
-    </main>
-    <div id="resources"></div>
-    <footer>
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>SCHOOL ADMIN OFFICE:</h3>
-                    <p><i class="fas fa-phone"></i> Phone: +91 33 22821450, +91 33 22826350</p>
-                    <p><i class="fas fa-fax"></i> Fax: +91 33 22826350</p>
-                    <p><i class="fas fa-envelope"></i> Email: <a
-                            href="mailto:info@shrishikshayatanschool.com">info@shrishikshayatanschool.com</a></p>
-                </div>
-                <div class="contact-info">
-                    <h3>VISITORS:</h3>
-                    <p><i class="fas fa-phone"></i> Phone: +91 33 22827752, +91 33 22821776</p>
-                    <p><i class="fas fa-envelope"></i> Email: <a
-                            href="mailto:principal@shrishikshayatanschool.com">principal@shrishikshayatanschool.com</a>
-                    </p>
-                    <h3>JUNIOR DEPT:</h3>
-                    <p><i class="fas fa-phone"></i> Phone: +91 33 22820346</p>
-                    <p><i class="fas fa-envelope"></i> Email: <a
-                            href="mailto:hm@shrishikshayatanschool.com">hm@shrishikshayatanschool.com</a></p>
-                    <h3>PRE-PRIMARY SECTION:</h3>
-                    <p><i class="fas fa-phone"></i> Phone: +91 8100975564, +91 8100975565</p>
-                    <p><i class="fas fa-envelope"></i> Email: <a
-                            href="mailto:hm@shrishikshayatanschool.com">hm@shrishikshayatanschool.com</a></p>
-                </div>
+        </div>
+
+    </div>
+
+    <h1 class="credit"> &copy; copyright - 2021</h1>
+
+</div>
+
+<!-- footer section ends -->
+
+<div class="full-container">
+    <div class="popup-container">
+        <label class="close-btn fas fa-times" onclick="closeForm()"></label>
+        <div class="text">Login</div>
+
+            
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <div class="data">
+        <label>Email</label>
+        <input type="email" name="email" required>
+    </div>
+    <div class="data">
+        <label>Password</label>
+        <input type="password" name="password" required>
+</div>
+        
+            <div class="btn-p">
+                <div class="inner"></div>
+                <button type="submit" value="login">Login</button>
             </div>
-        </section>
+        </form>
+    </div>
+</div>
 
-        <p>&copy; 2024 Shri Shikshayatan School. All rights reserved.</p>
-    </footer>
+<script src="{% static 'homepage/js/app.js' %}"></script>
 
-    <script>
-        fetch('/resources')
-            .then(response => response.json())
-            .then(data => {
-                const resourceDiv = document.getElementById('resources');
-                let html = '<table><thead><tr><th>ID</th><th>Name</th><th>Type</th></tr></thead><tbody>';
-                data.forEach(resource => {
-                    html += `<tr><td>${resource.id}</td><td>${resource.name}</td><td>${resource.type}</td></tr>`;
-                });
-                html += '</tbody></table>';
-                resourceDiv.innerHTML = html;
-            });
-    </script>
 </body>
-
 </html>

@@ -1,0 +1,134 @@
+{% extends "teacher/base.html" %}
+
+
+{% block content %}
+          <div class="row" >
+            <div class="col-lg-6" style="margin-left : 20%;">
+       
+              <div class="card mb-4" >
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Add a course</h6>
+                </div>
+                <div class="card-body" >
+                  <form method="POST" action="{% url 'addCourse' %}">{% csrf_token %}
+                    <input type="hidden" name="idus" value="{{ user.id }}">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Title </label>
+                      <input type="text" class="form-control" name="titleC" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="Course name" required>
+    
+                    </div>
+					 <div class="form-group">
+                      <label for="exampleInputEmail1">Level </label>
+                      <input type="text" class="form-control" name="levelC" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        placeholder="example : SMI S2" required>
+    
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Code</label>
+                      <input type="text" class="form-control" id="exampleInputPassword1" name="codeC" placeholder="Code for your course" required>
+                    </div>
+					  
+        
+                
+                    <input type="submit" class="btn btn-primary" value="Add" name="send">
+					<input type="reset" value="Clear" name="clear" class="btn btn-default">
+                  </form>
+                </div>
+              </div>
+
+             
+
+            </div>
+
+            <div class="col-lg-6">
+            
+
+            </div>
+          </div>
+{% endblock %}
+{% block sidebar %}
+<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'statistics' %}?uId={{user.id}}">
+    <div class="sidebar-brand-icon">
+      Online Class
+    </div>
+    <div class="sidebar-brand-text mx-3"></div>
+  </a>
+  <hr class="sidebar-divider my-0">
+ <br>
+  <div class="sidebar-heading">
+    Actions
+  </div>
+ <li class="nav-item">
+    <a class="nav-link " href="{% url 'statistics' %}?uId={{user.id}}">
+      <i class="fas fa-fw fa-home"></i>
+      <span>Home</span>
+    </a>
+  </li>
+ <li class="nav-item active">
+    <a class="nav-link" href="{% url 'addCourseSubject' %}?uId={{user.id}}">
+      <i class="fas fa-book-open"></i>
+      <span>Add course</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadC' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload course</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadTD' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload TD</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadTP' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload TP</span>
+    </a>
+  </li>
+ <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadCorre' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Upload correction</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'formUploadHW' %}?uId={{user.id}}">
+      <i class="fas fa-file-pdf"></i>
+      <span>Send homeWork</span>
+    </a>
+  </li>
+ 
+ 
+  <hr class="sidebar-divider">
+  <div class="sidebar-heading">
+    Views
+  </div>
+  <li class="nav-item">
+   <a class="nav-link" href="{% url 'allCourses' %}?idUs={{user.id}}">
+      <i class="fas fa-fw fa-book"></i>
+      <span>Yous courses</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+      aria-expanded="true" aria-controls="collapseBootstrap">
+      <i class="fas fa-fw fa-users"></i>
+      <span>Your students</span>
+    </a>
+    <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        {% for c in classeS %}
+        <a class="collapse-item" href="{% url 'displayAllStudents' %}?uId={{user.id}}&idC={{c.id}}">{{c.titleClass}}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </li>
+  
+</ul>
+
+{% endblock %}
