@@ -55,8 +55,22 @@ const getCookie = (name) => {
 
 sendChatBtn.addEventListener('click', handleChat);
 
-// Debugging logs
-console.log('Chatbot script loaded');
-console.log('Chat input:', chatInput);
-console.log('Send chat button:', sendChatBtn);
-console.log('Chatbox:', chatbox);
+
+// chatbot.js
+
+// chatbot.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    const chatbotToggler = document.querySelector('.chatbot-toggler');
+    const chatbot = document.querySelector('.chatbot');
+    const body = document.body;
+  
+    chatbotToggler.addEventListener('click', function() {
+      body.classList.toggle('show-chatbot');
+    });
+  
+    const closeBtn = document.querySelector('.chatbot header span');
+    closeBtn.addEventListener('click', function() {
+      body.classList.remove('show-chatbot');
+    });
+  });

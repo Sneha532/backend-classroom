@@ -2015,8 +2015,11 @@ body.sidebar-toggled footer.sticky-footer {
   right: 40px;
   bottom: 100px;
   border-radius: 15px;
+  transform-origin: bottom right;
   box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
               0 32px 64px -48px rgba(247, 73, 73, 0.5); 
+  
+  transition: all 0.2s ease;
 }
 
 .show-chatbot .chatbot{
@@ -2044,7 +2047,7 @@ body.sidebar-toggled footer.sticky-footer {
   transform: translateY(-50%);
 }
 .chatbot .chatbox{
-  padding: 30px 20px 70px;
+  padding: 30px 20px 100px;
   height: 460px;
   overflow-y: auto;
 }
@@ -2073,6 +2076,7 @@ body.sidebar-toggled footer.sticky-footer {
   font-size: 0.95rem;
   padding: 12px;
   max-width: 75%;
+  white-space: pre-wrap;
   border-radius:10px 10px 0 10px ;
   background: #8c93ff;
 }
@@ -2135,6 +2139,9 @@ body.sidebar-toggled footer.sticky-footer {
   align-items: center;
 }
 
+.show-chatbot .chatbot-toggler{
+  transform: rotate(90deg);
+}
 .chatbot-toggler span{
   position: absolute;
 }
