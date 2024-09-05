@@ -49,5 +49,6 @@ urlpatterns = [
     path('resource_status', views.resource_status, name='resource_status'),
     path('security_alerts', views.security_alerts, name='security_alerts'),
     path('resolve_alert/<int:alert_id>/', views.resolve_alert, name='resolve_alert'),
+    path('chatbot-response/', views.chatbot_response, name='chatbot_response'),
 
 ]

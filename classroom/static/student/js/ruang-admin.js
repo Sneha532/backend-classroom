@@ -90,3 +90,4 @@ document.querySelector("#picture_pick").onchange = function() {
 var version = document.getElementById('version-ruangadmin');
 
 version.innerHTML = "Version 1.1";
+

@@ -2,6 +2,13 @@ from django.shortcuts import render, redirect
 from .models import JoinClass, Todo, Users, classSubject, course, TP, TD, correction_TD_TP, Attendance, Resource, SecurityAlert
 import datetime
 from django.views.decorators.csrf import csrf_exempt
+from dotenv import load_dotenv
+import google.generativeai as genai
+import re
+import os
+from django.http import JsonResponse
+import json
+load_dotenv() 
 # Create your views here.
 
 
@@ -595,3 +602,38 @@ def profileT(request):
     dataTeacher = Users.objects.get(email=emailT)
     classeS = classSubject.objects.filter(userId=dataTeacher)
     return render(request, 'teacher/teacherProfile.html', {'user': dataTeacher, 'classeS': classeS})
+
+
+# Configure the Gemini API key
+genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+
+# Load the Gemini Pro model
+model = genai.GenerativeModel('gemini-pro')
+
+def format_response(text):
+    # Replace ** with <b> for bold text
+    text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
+    # Replace * with <i> for italic text
+    text = re.sub(r'\*(.*?)\*', r'<i>\1</i>', text)
+    return text
+
+def get_gemini_response(prompt):
+    response = model.generate_content(prompt)
+    if not response.candidates or not response.text:
+        return "Sorry, I couldn't generate a response."
+
+    formatted_text = format_response(response.text)
+    return formatted_text
+
+@csrf_exempt
+def chatbot_response(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            user_message = data.get('message')
+            if user_message:
+                gemini_response = get_gemini_response(user_message)
+                return JsonResponse({'response': gemini_response})
+        except json.JSONDecodeError:
+            return JsonResponse({'response': 'Invalid JSON'}, status=400)
+    return JsonResponse({'response': 'Invalid request'}, status=400)
