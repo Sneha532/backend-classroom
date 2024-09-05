@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import JoinClass, Todo, Users, classSubject, course, TP, TD, correction_TD_TP
+from .models import JoinClass, Todo, Users, classSubject, course, TP, TD, correction_TD_TP, Attendance, Resource, SecurityAlert
 import datetime
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
@@ -224,6 +224,49 @@ def destroy(request):
 def teacher_index(request):
     return render(request, 'teacher/teacherSpace.html')
 
+def mark_attendance(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        class_id = request.POST.get('class_id')
+        status = request.POST.get('status')
+        user = Users.objects.get(id=user_id)
+        class_subject = classSubject.objects.get(id=class_id)
+        Attendance.objects.create(user=user, classSubject=class_subject, status=status)
+        return redirect('PFES6:attendance_report')
+    else:
+        users = Users.objects.filter(role='s')
+        classes = classSubject.objects.all()
+        return render(request, 'attendance/mark_attendance.html', {'users': users, 'classes': classes})
+
+def attendance_report(request):
+    attendance_records = Attendance.objects.all()
+    return render(request, 'attendance/attendance_report.html', {'attendance_records': attendance_records})
+
+def manage_resources(request):
+    if request.method == 'POST':
+        resource_id = request.POST.get('resource_id')
+        status = request.POST.get('status')
+        resource = Resource.objects.get(id=resource_id)
+        resource.status = status
+        resource.save()
+        return redirect('resource_status')
+    else:
+        resources = Resource.objects.all()
+        return render(request, 'resources/manage_resources.html', {'resources': resources})
+
+def resource_status(request):
+    resources = Resource.objects.all()
+    return render(request, 'resources/resource_status.html', {'resources': resources})
+
+def security_alerts(request):
+    alerts = SecurityAlert.objects.all()
+    return render(request, 'security/alerts.html', {'alerts': alerts})
+
+def resolve_alert(request, alert_id):
+    alert = SecurityAlert.objects.get(id=alert_id)
+    alert.resolved = True
+    alert.save()
+    return redirect('security_alerts')
 
 def statistics(request):
     idu = request.GET.get('uId')

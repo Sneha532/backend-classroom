@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resource Status</title>
+</head>
+<body>
+    <h1>Resource Status</h1>
+    <table>
+        <tr>
+            <th>Resource</th>
+            <th>Status</th>
+            <th>Last Maintenance</th>
+        </tr>
+        {% for resource in resources %}
+            <tr>
+                <td>{{ resource.name }}</td>
+                <td>{{ resource.status }}</td>
+                <td>{{ resource.last_maintenance }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Alerts</title>
+</head>
+<body>
+    <h1>Security Alerts</h1>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Resolved</th>
+            <th>Action</th>
+        </tr>
+        {% for alert in alerts %}
+            <tr>
+                <td>{{ alert.alert_type }}</td>
+                <td>{{ alert.description }}</td>
+                <td>{{ alert.date }}</td>
+                <td>{{ alert.resolved }}</td>
+                <td>
+                    {% if not alert.resolved %}
+                        <a href="{% url 'PFES6:resolve_alert' alert.id %}">Resolve</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

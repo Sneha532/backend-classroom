@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mark Attendance</title>
+</head>
+<body>
+    <h1>Mark Attendance</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="user_id">Student:</label>
+        <select id="user_id" name="user_id">
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.nom }} {{ user.prenom }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="class_id">Class:</label>
+        <select id="class_id" name="class_id">
+            {% for class in classes %}
+                <option value="{{ class.id }}">{{ class.titleClass }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="present">Present</option>
+            <option value="absent">Absent</option>
+        </select><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

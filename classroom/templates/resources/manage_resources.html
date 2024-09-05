@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Resources</title>
+</head>
+<body>
+    <h1>Manage Resources</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="resource_id">Resource:</label>
+        <select id="resource_id" name="resource_id">
+            {% for resource in resources %}
+                <option value="{{ resource.id }}">{{ resource.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="available">Available</option>
+            <option value="in_use">In Use</option>
+            <option value="maintenance">Maintenance</option>
+        </select><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
