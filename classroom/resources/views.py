@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import JoinClass, Todo, Users, classSubject, course, TP, TD, correction_TD_TP, Attendance, Resource, SecurityAlert
 import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from dotenv import load_dotenv
 import google.generativeai as genai
 import re
@@ -637,3 +638,54 @@ def chatbot_response(request):
         except json.JSONDecodeError:
             return JsonResponse({'response': 'Invalid JSON'}, status=400)
     return JsonResponse({'response': 'Invalid request'}, status=400)
+
+
+## face recognition function
+@csrf_exempt
+@login_required(login_url='login')
+def take_attendance(request):
+    if request.method == 'POST':
+        details = {
+            'branch': request.POST.get('branch'),
+            'year': request.POST.get('year'),
+            'section': request.POST.get('section'),
+            'period': request.POST.get('period'),
+        }
+
+        # Call the Recognizer function to get the recognized names
+        recognized_names = Recognizer(details)
+
+        # Get the class subject based on the details
+        try:
+            class_subject = classSubject.objects.get(
+                titleClass=details['branch'],  # Assuming titleClass is used for branch
+                level=details['year'],  # Assuming level is used for year
+                codeClasse=details['section']  # Assuming codeClasse is used for section
+            )
+        except classSubject.DoesNotExist:
+            messages.error(request, "Class subject not found.")
+            return redirect('home')
+
+        # Create or update the attendance record
+        attendance, created = Attendance.objects.get_or_create(
+            classSubject=class_subject,
+            date=date.today()
+        )
+
+        # Update the attendance record
+        present_students = Users.objects.filter(email__in=recognized_names)
+        absent_students = Users.objects.exclude(email__in=recognized_names)
+
+        attendance.present.set(present_students)
+        attendance.absent.set(absent_students)
+        attendance.save()
+
+        messages.success(request, "Attendance taken successfully.")
+        return redirect('attendance_report')
+
+    return render(request, 'attendence_sys/home.html')
+
+@login_required(login_url='login')
+def attendance_report(request):
+    attendance_records = Attendance.objects.all()
+    return render(request, 'attendance/attendance_report.html', {'attendance_records': attendance_records})

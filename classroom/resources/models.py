@@ -59,11 +59,6 @@ class Todo(models.Model):
     TodoSFile = models.FileField(upload_to='documents', null=True)
     course = models.ForeignKey(classSubject, on_delete=models.CASCADE)
 
-class Attendance(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    classSubject = models.ForeignKey(classSubject, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
-    status = models.CharField(max_length=10, choices=[('present', 'Present'), ('absent', 'Absent')])
 
 class Resource(models.Model):
     name = models.CharField(max_length=50)
@@ -79,3 +74,13 @@ class SecurityAlert(models.Model):
 
     def __str__(self):
         return self.alert_type
+    
+
+class Attendance(models.Model):
+    classSubject = models.ForeignKey(classSubject, on_delete=models.CASCADE)
+    date = models.DateField()
+    present = models.ManyToManyField(Users, related_name='present_users')
+    absent = models.ManyToManyField(Users, related_name='absent_users')
+
+    def __str__(self):
+        return f"Attendance Report for {self.classSubject.titleClass} on {self.date}"
