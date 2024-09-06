@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import JoinClass, Todo, Users, classSubject, course, TP, TD, correction_TD_TP, Attendance, Resource, SecurityAlert
+from .models import JoinClass, Todo, Users, classSubject, course, TP, TD, correction_TD_TP
 import datetime
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
 from dotenv import load_dotenv
 import google.generativeai as genai
 import re
@@ -232,49 +231,7 @@ def destroy(request):
 def teacher_index(request):
     return render(request, 'teacher/teacherSpace.html')
 
-def mark_attendance(request):
-    if request.method == 'POST':
-        user_id = request.POST.get('user_id')
-        class_id = request.POST.get('class_id')
-        status = request.POST.get('status')
-        user = Users.objects.get(id=user_id)
-        class_subject = classSubject.objects.get(id=class_id)
-        Attendance.objects.create(user=user, classSubject=class_subject, status=status)
-        return redirect('attendance_report')
-    else:
-        users = Users.objects.filter(role='s')
-        classes = classSubject.objects.all()
-        return render(request, 'attendance/mark_attendance.html', {'users': users, 'classes': classes})
 
-def attendance_report(request):
-    attendance_records = Attendance.objects.all()
-    return render(request, 'attendance/attendance_report.html', {'attendance_records': attendance_records})
-
-def manage_resources(request):
-    if request.method == 'POST':
-        resource_id = request.POST.get('resource_id')
-        status = request.POST.get('status')
-        resource = Resource.objects.get(id=resource_id)
-        resource.status = status
-        resource.save()
-        return redirect('resource_status')
-    else:
-        resources = Resource.objects.all()
-        return render(request, 'resources/manage_resources.html', {'resources': resources})
-
-def resource_status(request):
-    resources = Resource.objects.all()
-    return render(request, 'resources/resource_status.html', {'resources': resources})
-
-def security_alerts(request):
-    alerts = SecurityAlert.objects.all()
-    return render(request, 'security/alerts.html', {'alerts': alerts})
-
-def resolve_alert(request, alert_id):
-    alert = SecurityAlert.objects.get(id=alert_id)
-    alert.resolved = True
-    alert.save()
-    return redirect('security_alerts')
 
 def statistics(request):
     idu = request.GET.get('uId')
@@ -638,54 +595,3 @@ def chatbot_response(request):
         except json.JSONDecodeError:
             return JsonResponse({'response': 'Invalid JSON'}, status=400)
     return JsonResponse({'response': 'Invalid request'}, status=400)
-
-
-## face recognition function
-@csrf_exempt
-@login_required(login_url='login')
-def take_attendance(request):
-    if request.method == 'POST':
-        details = {
-            'branch': request.POST.get('branch'),
-            'year': request.POST.get('year'),
-            'section': request.POST.get('section'),
-            'period': request.POST.get('period'),
-        }
-
-        # Call the Recognizer function to get the recognized names
-        recognized_names = Recognizer(details)
-
-        # Get the class subject based on the details
-        try:
-            class_subject = classSubject.objects.get(
-                titleClass=details['branch'],  # Assuming titleClass is used for branch
-                level=details['year'],  # Assuming level is used for year
-                codeClasse=details['section']  # Assuming codeClasse is used for section
-            )
-        except classSubject.DoesNotExist:
-            messages.error(request, "Class subject not found.")
-            return redirect('home')
-
-        # Create or update the attendance record
-        attendance, created = Attendance.objects.get_or_create(
-            classSubject=class_subject,
-            date=date.today()
-        )
-
-        # Update the attendance record
-        present_students = Users.objects.filter(email__in=recognized_names)
-        absent_students = Users.objects.exclude(email__in=recognized_names)
-
-        attendance.present.set(present_students)
-        attendance.absent.set(absent_students)
-        attendance.save()
-
-        messages.success(request, "Attendance taken successfully.")
-        return redirect('attendance_report')
-
-    return render(request, 'attendence_sys/home.html')
-
-@login_required(login_url='login')
-def attendance_report(request):
-    attendance_records = Attendance.objects.all()
-    return render(request, 'attendance/attendance_report.html', {'attendance_records': attendance_records})

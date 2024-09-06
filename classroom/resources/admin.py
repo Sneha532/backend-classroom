@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Users,classSubject,JoinClass,course,TD,TP,correction_TD_TP,Todo,Attendance,Resource,SecurityAlert
+from .models import Users,classSubject,JoinClass,course,TD,TP,correction_TD_TP,Todo
 
 
 
@@ -16,6 +16,3 @@ admin.site.register(TD)
 admin.site.register(TP)
 admin.site.register(correction_TD_TP)
 admin.site.register(Todo)
-admin.site.register(Attendance)
-admin.site.register(Resource)
-admin.site.register(SecurityAlert)

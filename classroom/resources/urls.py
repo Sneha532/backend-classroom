@@ -43,12 +43,6 @@ urlpatterns = [
          name='destroy'),
     path('login', views.user_login, name="login"),
     path('logout', views.user_logout, name='logout'),
-    path('take_attendance', views.take_attendance, name='take_attendance'),
-    path('attendance_report', views.attendance_report, name='attendance_report'),
-    path('manage_resources', views.manage_resources, name='manage_resources'),
-    path('resource_status', views.resource_status, name='resource_status'),
-    path('security_alerts', views.security_alerts, name='security_alerts'),
-    path('resolve_alert/<int:alert_id>/', views.resolve_alert, name='resolve_alert'),
     path('chatbot-response/', views.chatbot_response, name='chatbot_response'),
 
 ]
