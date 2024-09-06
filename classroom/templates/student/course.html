@@ -68,7 +68,7 @@
       <div class="card">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Courses Files</h6>
-        <button id="take-attendance-btn" class="m-0 font-weight-bold text-primary">Take attendance</button>
+        <button id="take-attendance-btn" class="m-0 font-weight-bold text-primary" onclick="location.href='http://127.0.0.1:8000/attendance/'"">Take attendance</button>
         </div>  
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
@@ -203,29 +203,6 @@
       </div>
     </div>
   </div>
-  <script>
-    document.getElementById('take-attendance-btn').addEventListener('click', function() {
-        fetch("{% url 'take_attendance' %}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": "{{ csrf_token }}"
-            },
-            body: JSON.stringify({
-                email: "email",
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.href = "{% url 'attendance_report' %}";
-            } else {
-                alert("Error taking attendance");
-            }
-        })
-        .catch(error => console.error("Error:", error));
-    });
-    </script>
 {% endblock %}
 
 {% block chatbot %}
