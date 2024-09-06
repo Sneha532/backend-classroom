@@ -239,7 +239,7 @@ def mark_attendance(request):
         user = Users.objects.get(id=user_id)
         class_subject = classSubject.objects.get(id=class_id)
         Attendance.objects.create(user=user, classSubject=class_subject, status=status)
-        return redirect('PFES6:attendance_report')
+        return redirect('attendance_report')
     else:
         users = Users.objects.filter(role='s')
         classes = classSubject.objects.all()
