@@ -566,7 +566,7 @@ def profileT(request):
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
 
 # Load the Gemini Pro model
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 def format_response(text):
     # Replace ** with <b> for bold text
